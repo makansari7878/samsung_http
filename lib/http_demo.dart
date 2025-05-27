@@ -1,80 +1,71 @@
 import 'dart:convert';
-
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:samsung_http_proj/user.dart';
 
-
-
-
 class HttpDemo extends StatefulWidget {
-  const HttpDemo({super.key});
-
+  HttpDemo({super.key});
 
   @override
   State<HttpDemo> createState() => PaginationDemoState();
 }
 
-
 class PaginationDemoState extends State<HttpDemo> {
   List<User> users = [];
   int page = 1;
   bool isLoading = false;
-  final ScrollController _scrollController = ScrollController();
-
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     getRequest();
-    _scrollController.addListener(_scrollListener);
+    scrollController.addListener(scrollListener);
   }
 
-
-  void _scrollListener() {
-
-
-/*    if (_scrollController.position.pixels >
-       _scrollController.position.maxScrollExtent - 100)*/
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent ) {
+  void scrollListener() {
+    if (scrollController.position.pixels >=
+        scrollController.position.maxScrollExtent - 100 &&
+        !isLoading) {
       getRequest();
     }
   }
 
-
   Future<void> getRequest() async {
     if (isLoading) return;
+
     setState(() => isLoading = true);
 
+    try {
+      final url = "https://jsonplaceholder.typicode.com/posts?_page=$page&_limit=10";
+      final response = await http.get(Uri.parse(url));
 
-    final url = "https://jsonplaceholder.typicode.com/posts";
-    final response = await http.get(Uri.parse(url));
-    final responseData = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = jsonDecode(response.body);
 
-
-    setState(() {
-      for (var singleUser in responseData) {
-        users.add(User(
-          id: singleUser["id"],
-          userId: singleUser["userId"],
-          title: singleUser["title"],
-          body: singleUser["body"],
-        ));
+        setState(() {
+          users.addAll(responseData.map((singleUser) => User(
+            id: singleUser["id"],
+            userId: singleUser["userId"],
+            title: singleUser["title"],
+            body: singleUser["body"],
+          )));
+          page++;
+        });
       }
-      page++;
-      isLoading = false;
-    });
+    } catch (e) {
+      debugPrint("Error: $e");
+    } finally {
+      setState(() => isLoading = false);
+    }
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Pagination Demo")),
       body: ListView.builder(
-        controller: _scrollController,
+        controller: scrollController,
         itemCount: users.length + 1,
         itemBuilder: (context, index) {
           if (index < users.length) {
