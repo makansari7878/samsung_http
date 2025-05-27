@@ -5,7 +5,6 @@ import 'package:samsung_http_proj/user.dart';
 class UserDetails extends StatefulWidget {
   final User user;
   const UserDetails({super.key, required this.user});
-
   @override
   State<UserDetails> createState() => _UserDetailsState();
 }
