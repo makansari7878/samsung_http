@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:samsung_http_proj/user.dart';
+import 'package:samsung_http_proj/user_details.dart';
 
 class HttpDemo extends StatefulWidget {
   const HttpDemo({super.key});
@@ -63,6 +64,7 @@ class _HttpDemoState extends State<HttpDemo> {
                       }
                       else{
                         return ListView.builder(
+
                           itemCount: snapshot.data?.length,
                             itemBuilder: (ctx, index) => Card(
                           margin: EdgeInsets.all(10),
@@ -71,7 +73,13 @@ class _HttpDemoState extends State<HttpDemo> {
                           child: ListTile(
                             title: Text(snapshot.data![index].title, style:TextStyle(fontSize: 20, color: Colors.redAccent),),
                             subtitle: Text(snapshot.data![index].body, style:TextStyle(fontSize: 20, color: Colors.black)),
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder:(context) {
+                                return UserDetails(user : snapshot.data![index]);
+                              }));
+                            },
                           ),
+
 
 
                           ),
