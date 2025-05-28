@@ -25,7 +25,7 @@ class PaginationDemoState extends State<HttpDemo> {
 
   void scrollListener() {
     if (scrollController.position.pixels >=
-        scrollController.position.maxScrollExtent - 100 &&
+        scrollController.position.maxScrollExtent - 50 &&
         !isLoading) {
       getRequest();
     }

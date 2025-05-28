@@ -1,8 +1,10 @@
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
+import 'package:samsung_http_proj/Dio_Demo.dart';
 import 'package:samsung_http_proj/http_demo.dart';
 import 'package:flutter/foundation.dart';
+import 'package:samsung_http_proj/modal_demo.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,12 +13,12 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: HttpDemo()
+      home: DioDemo()
     );
   }
 }
