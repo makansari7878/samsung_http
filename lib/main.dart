@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:samsung_http_proj/Dio_Demo.dart';
 import 'package:samsung_http_proj/http_demo.dart';
 import 'package:flutter/foundation.dart';
+import 'package:samsung_http_proj/inherited_widget_demo.dart';
 import 'package:samsung_http_proj/modal_demo.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: DioDemo()
+      home: InheritedWidgetDemo()
     );
   }
 }

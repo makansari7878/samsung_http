@@ -32,7 +32,7 @@ class _ModalDemoState extends State<ModalDemo> {
       context: context,
       builder: (context) {
         return Container(
-          height: 200,
+          height: 300,
           padding: EdgeInsets.all(16),
           color: Colors.greenAccent,
           child: Column(
